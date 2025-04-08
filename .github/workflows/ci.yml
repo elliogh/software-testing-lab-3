@@ -78,20 +78,3 @@ jobs:
         uses: actions/deploy-pages@v4.0.5
         with:
           artifact_name: all-results
-  notify:
-    needs: [build, upload-artifacts]
-    runs-on: ubuntu-latest
-    steps:
-    - name: notify telegramm data
-      uses: appleboy/telegram-action@master
-      with:
-        to: ${{ secrets.TELEGRAM_TO }}
-        token: ${{ secrets.TELEGRAM_TOKEN }}
-        message: |
-          ${{ github.event_name }} commit in ${{ github.repository }} by "${{ github.actor }}". [${{github.sha}}@${{ github.ref }}]
-          -----------------------------------------
-          Allure Report URL: https://elliogh.github.io/software-testing-lab-3/allure-report/allureReport/
-          Jacoco Results URL: https://elliogh.github.io/software-testing-lab-3/jacoco/test/html/
-          Gradle Build Results URL: https://elliogh.github.io/software-testing-lab-3/tests/test/
-          SpotBugs Main Results URL: https://elliogh.github.io/software-testing-lab-3/main/spotbugs.html
-          SpotBugs Test Results URL: https://elliogh.github.io/software-testing-lab-3/test/spotbugs.html
