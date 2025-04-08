@@ -1,0 +1,96 @@
+name: testing lab 2 CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
+    - name: Build with Gradle Wrapper
+      run: ./gradlew build 
+      continue-on-error: true
+    - name: upload gradle build results
+      uses: actions/upload-pages-artifact@v3.0.1
+      with:
+        name: gradle-build-results
+        path: build/reports/tests/test
+    - name: upload jacoco results
+      uses: actions/upload-pages-artifact@v3.0.1
+      with:
+        name: jacoco-results
+        path: build/reports/jacoco/test
+    - name: upload allure report
+      uses: actions/upload-pages-artifact@v3.0.1
+      with:
+        name: allure-report
+        path: build/reports/allure-report/allureReport
+    - name: upload spotbugs main
+      uses: actions/upload-pages-artifact@v3.0.1
+      with:
+        name: spotbugs-main
+        path: build/reports/main
+    - name: upload spotbugs test
+      uses: actions/upload-pages-artifact@v3.0.1
+      with:
+        name: spotbugs-test
+        path: build/reports/test
+    - name: upload all results
+      uses: actions/upload-pages-artifact@v3.0.1
+      with:
+        name: all-results
+        path: build/reports
+  dependency-submission:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+    - name: Generate and submit dependency graph
+      uses: gradle/actions/dependency-submission@v4
+  upload-artifacts:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy all results Pages
+        uses: actions/deploy-pages@v4.0.5
+        with:
+          artifact_name: all-results
+  notify:
+    needs: [build, upload-artifacts]
+    runs-on: ubuntu-latest
+    steps:
+    - name: notify telegramm data
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+          ${{ github.event_name }} commit in ${{ github.repository }} by "${{ github.actor }}". [${{github.sha}}@${{ github.ref }}]
+          -----------------------------------------
+          Allure Report URL: https://elliogh.github.io/software-testing-lab-3/allure-report/allureReport/
+          Jacoco Results URL: https://elliogh.github.io/software-testing-lab-3/jacoco/test/html/
+          Gradle Build Results URL: https://elliogh.github.io/software-testing-lab-3/tests/test/
+          SpotBugs Main Results URL: https://elliogh.github.io/software-testing-lab-3/main/spotbugs.html
+          SpotBugs Test Results URL: https://elliogh.github.io/software-testing-lab-3/test/spotbugs.html

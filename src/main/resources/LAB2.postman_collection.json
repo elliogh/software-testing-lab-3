@@ -1,0 +1,1087 @@
+{
+	"info": {
+		"_postman_id": "e6b0b32b-3c8f-4bb0-b66f-1bb6cb40323c",
+		"name": "LAB2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19281955"
+	},
+	"item": [
+		{
+			"name": "registerUser - positive",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"packages": {},
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/register?userId={{userId}}&userName={{username}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"register"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "{{userId}}"
+						},
+						{
+							"key": "userName",
+							"value": "{{username}}"
+						}
+					]
+				},
+				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "recordSession - positive",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/recordSession?userId={{userId}}&loginTime={{loginTime}}&logoutTime={{logoutTime}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"recordSession"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "{{userId}}"
+						},
+						{
+							"key": "loginTime",
+							"value": "{{loginTime}}"
+						},
+						{
+							"key": "logoutTime",
+							"value": "{{logoutTime}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "totalActivity - positive",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body time is: 1440 minutes\", function () {",
+							"    pm.response.to.have.body('Total activity: 1440 minutes');",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/totalActivity?userId={{userId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"totalActivity"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "{{userId}}"
+						}
+					]
+				},
+				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+			},
+			"response": []
+		},
+		{
+			"name": "inactiveUsers - positive",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/inactiveUsers?days={{days}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"inactiveUsers"
+					],
+					"query": [
+						{
+							"key": "days",
+							"value": "{{days}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "monthlyActivity - positive",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ans is correct\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData).to.have.property('2025-02-04', 1440);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/monthlyActivity?userId={{userId}}&month={{month}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"monthlyActivity"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "{{userId}}"
+						},
+						{
+							"key": "month",
+							"value": "{{month}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "registerUser - negative - duplication",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"User already exists\", function () {",
+							"    pm.response.to.have.body(\"User already exists\")",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/register?userId={{userId}}&userName={{username}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"register"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "{{userId}}"
+						},
+						{
+							"key": "userName",
+							"value": "{{username}}"
+						}
+					]
+				},
+				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "registerUser - negative - null userId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Missing parameters\", function () {\r",
+							"    pm.response.to.have.body(\"Missing parameters\")\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/register?userName={{username}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"register"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "{{userId}}",
+							"disabled": true
+						},
+						{
+							"key": "userName",
+							"value": "{{username}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "registerUser - negative - null userName",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Missing parameters\", function () {\r",
+							"    pm.response.to.have.body(\"Missing parameters\")\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/register?userId={{userId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"register"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "{{userId}}"
+						},
+						{
+							"key": "userName",
+							"value": "{{username}}",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "recordSession - negative - null userId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Missing parameters\", function () {\r",
+							"    pm.response.to.have.body(\"Missing parameters\")\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/recordSession?loginTime={{loginTime}}&logoutTime={{logoutTime}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"recordSession"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "{{userId}}",
+							"disabled": true
+						},
+						{
+							"key": "loginTime",
+							"value": "{{loginTime}}"
+						},
+						{
+							"key": "logoutTime",
+							"value": "{{logoutTime}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "recordSession - negative - null logoutTime",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Missing parameters\", function () {\r",
+							"    pm.response.to.have.body(\"Missing parameters\")\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/recordSession?userId={{userId}}&loginTime={{loginTime}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"recordSession"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "{{userId}}"
+						},
+						{
+							"key": "loginTime",
+							"value": "{{loginTime}}"
+						},
+						{
+							"key": "logoutTime",
+							"value": "{{logoutTime}}",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "recordSession - negative - null loginTime",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Missing parameters\", function () {\r",
+							"    pm.response.to.have.body(\"Missing parameters\")\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/recordSession?userId={{userId}}&logoutTime={{logoutTime}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"recordSession"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "{{userId}}"
+						},
+						{
+							"key": "loginTime",
+							"value": "{{loginTime}}",
+							"disabled": true
+						},
+						{
+							"key": "logoutTime",
+							"value": "{{logoutTime}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "recordSession - negative - parsing error loginTime",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Invalid data\", function () {\r",
+							"    pm.response.to.have.body(\"Invalid data: Text 'loginTime' could not be parsed at index 0\")\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/recordSession?userId={{userId}}&loginTime=loginTime&logoutTime={{logoutTime}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"recordSession"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "{{userId}}"
+						},
+						{
+							"key": "loginTime",
+							"value": "loginTime"
+						},
+						{
+							"key": "logoutTime",
+							"value": "{{logoutTime}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "recordSession - negative - parsing error logoutTime",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Invalid data\", function () {\r",
+							"    pm.response.to.have.body(\"Invalid data: Text 'logoutTime' could not be parsed at index 0\")\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/recordSession?userId={{userId}}&loginTime={{loginTime}}&logoutTime=logoutTime",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"recordSession"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "{{userId}}"
+						},
+						{
+							"key": "loginTime",
+							"value": "{{loginTime}}"
+						},
+						{
+							"key": "logoutTime",
+							"value": "logoutTime"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "recordSession - negative - user not found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"User not found\", function () {\r",
+							"    pm.response.to.have.body(\"Invalid data: User not found\")\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/recordSession?userId=userId&loginTime={{loginTime}}&logoutTime={{logoutTime}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"recordSession"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "userId"
+						},
+						{
+							"key": "loginTime",
+							"value": "{{loginTime}}"
+						},
+						{
+							"key": "logoutTime",
+							"value": "{{logoutTime}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "totalActivity - negative - Missing userId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Missing userId\", function () {\r",
+							"    pm.response.to.have.body(\"Missing userId\")\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/totalActivity",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"totalActivity"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "userId",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "totalActivity - negative - user not found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"User not found\", function () {\r",
+							"    pm.response.to.have.body(\"Invalid data: User not found\")\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/totalActivity?userId=null",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"totalActivity"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "null"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "inactiveUsers - negative - Missing days parameter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Missing days parameter\", function () {\r",
+							"    pm.response.to.have.body(\"Missing days parameter\")\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/inactiveUsers",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"inactiveUsers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "inactiveUsers - negative - invalid number format for days",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Invalid number format for days\", function () {\r",
+							"    pm.response.to.have.body(\"Invalid number format for days\")\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/inactiveUsers?days=null",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"inactiveUsers"
+					],
+					"query": [
+						{
+							"key": "days",
+							"value": "null"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "monthlyActivity - negative - missing userId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Missing days parameter\", function () {\r",
+							"    pm.response.to.have.body(\"Missing parameters\")\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/monthlyActivity?month={{month}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"monthlyActivity"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "{{userId}}",
+							"disabled": true
+						},
+						{
+							"key": "month",
+							"value": "{{month}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "monthlyActivity - negative - missing month",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Missing days parameter\", function () {\r",
+							"    pm.response.to.have.body(\"Missing parameters\")\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/monthlyActivity?userId={{userId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"monthlyActivity"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "{{userId}}"
+						},
+						{
+							"key": "month",
+							"value": "{{month}}",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "monthlyActivity - negative - invalid month format",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Invalid data: Text 'null' could not be parsed at index 0\", function () {\r",
+							"    pm.response.to.have.body(\"Invalid data: Text 'null' could not be parsed at index 0\")\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/monthlyActivity?userId={{userId}}&month=null",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"monthlyActivity"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "{{userId}}"
+						},
+						{
+							"key": "month",
+							"value": "null"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "monthlyActivity - negative - user not found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Invalid data: No sessions found for user\", function () {\r",
+							"    pm.response.to.have.body(\"Invalid data: No sessions found for user\")\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/monthlyActivity?userId=null&month={{month}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"monthlyActivity"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "null"
+						},
+						{
+							"key": "month",
+							"value": "{{month}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "userId",
+			"value": "1"
+		},
+		{
+			"key": "base_url",
+			"value": "http://localhost:7002"
+		},
+		{
+			"key": "username",
+			"value": "name",
+			"type": "string"
+		},
+		{
+			"key": "days",
+			"value": "4",
+			"type": "string"
+		},
+		{
+			"key": "loginTime",
+			"value": "2025-02-04T17:57:58.928497400",
+			"type": "string"
+		},
+		{
+			"key": "logoutTime",
+			"value": "2025-02-05T17:57:58.928497400",
+			"type": "string"
+		},
+		{
+			"key": "month",
+			"value": "2025-02",
+			"type": "string"
+		}
+	]
+}
